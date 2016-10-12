@@ -67,7 +67,8 @@ For convenience, we provide a `Logger` class, taking a log level parameter
 
 Example:
 ```js
-const {Wit, log} = require('node-wit');
+const Wit = require('node-wit').Wit;
+const log = require('node-wit').log;
 
 const client = new Wit({
   accessToken: MY_TOKEN,
@@ -78,7 +79,12 @@ const client = new Wit({
         return resolve();
       });
     },
-    myAction({sessionId, context, text, entities}) {
+    myAction(request) {
+      const sessionId = request.sessionId;
+      const context = request.context;
+      const text = request.text;
+      const entities = request.entities;
+
       console.log(`Session ${sessionId} received ${text}`);
       console.log(`The current context is ${JSON.stringify(context)}`);
       console.log(`Wit extracted ${JSON.stringify(entities)}`);
@@ -163,7 +169,7 @@ Starts an interactive conversation with your bot.
 
 Example:
 ```js
-const {interactive} = require('node-wit');
+const interactive = require('node-wit').interactive;
 interactive(client);
 ```
 
